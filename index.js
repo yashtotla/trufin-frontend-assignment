@@ -1,3 +1,10 @@
+/**
+ * 
+ * @param {Array} urls 
+ * @param {Number} maxNum 
+ * @returns {Promise}
+ */
+
 function multiRequest(urls = [], maxNum = 1) {
 
     const len = urls.length;
@@ -22,9 +29,9 @@ function multiRequest(urls = [], maxNum = 1) {
                 const url = urls[current];
 
                 fetch(url).then(result => {
-                    result.json().then(result => {
+                    result.text().then(result => {
                         finishCount++;
-                        res[current] = result.fact;
+                        res[current] = result;
                         if (current < len) {
                             next()
                         }
@@ -43,7 +50,7 @@ function multiRequest(urls = [], maxNum = 1) {
 
 let urls = new Array(10).fill("https://catfact.ninja/fact")
 
-let limit = [20, 10, 5, 2, 1]
+let limit = [10, 5, 2, 1]
 
 limit.forEach((l, i) => {
     setTimeout(() => {
@@ -52,5 +59,5 @@ limit.forEach((l, i) => {
             console.log(data)
             console.timeEnd(`${l} parallel requests`)
         })
-    }, i*2000)
+    }, i * 5000)
 })
